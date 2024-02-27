@@ -23,6 +23,8 @@ router.post("/add-task" , async (req,res) => {
             days: req.body.Days
         }).then((result) => {
           console.log(result, "this is the result");
+        
+
           res.status(200).json({
             message: "New Task created successfully!",
           });
@@ -53,6 +55,31 @@ router.post("/update-task" , (req,res) => {
     } else {
       res.status(401).json({ message: "unauthenticated" });
     }
+
+})
+
+router.get("/getAllTasks" , async (req , res) => {
+
+  console.log(`req hit /getAllTasks endpoint \n`)
+
+   if (checkAuthentication(req.session)) {
+    console.log("authenticated  /getAllTasks");
+     let username = req.session.user;
+
+     let currentUser = await User.findOne({ username : username})
+
+     let allTasks = await Task.find({ owner: currentUser._id });
+
+      res.status(200).json({
+        message: "All Tasks fetched successfully!",
+        tasks: allTasks
+      });
+
+    
+   } else {
+    console.log("unauthenticated /getAllTasks");
+     res.status(401).json({ message: "unauthenticated" });
+   }
 
 })
 

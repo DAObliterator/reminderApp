@@ -8,7 +8,7 @@ export const ProfileCard = ( ) => {
   return (
     <div
       id="Profile-Card"
-      className="min-h-56 min-w-40 flex flex-col justify-evenly items-center rounded-md bg-bg3 shadow-md sm:w-1/4 w-1/2 sm:h-3/5 text-white font-bold tracking-wide "
+      className="min-h-40 min-w-40 flex flex-col justify-evenly items-center rounded-md bg-bg3 shadow-md  text-white font-bold tracking-wide "
     >
       <div id="Profile-Dummy-Image" className="h-1/2 w-1/2 p-2">
         <img src="/oldman2.jpg" alt="oldman" className="bg-bg3 rounded-full" />

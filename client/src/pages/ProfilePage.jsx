@@ -12,7 +12,7 @@ export const ProfilePage = () => {
     const [hour , setHour] = useState("1");
     const [minute , setMinute] = useState("01");
     const [ amPM , setAMPM ] = useState("AM");
-    const [ arrayOfTasks , setArrayOfTaks ] = useState([]);
+    const [ arrayOfTasks , setArrayOfTasks ] = useState([]);
     const [arrayOfTimes, setArrayOfTimes] = useState(["1:01AM"]);
     const [medicine , setMedicine ] = useState("");
     const [arrayOfDays , setArrayOfDays ] = useState(["Monday"]);
@@ -23,7 +23,27 @@ export const ProfilePage = () => {
     const [confmDltn , setConfmDltn] = useState(false);
 
   
-  
+    useEffect(() => {
+
+       axios
+         .get("http://localhost:6028/task/getAllTasks", {
+           withCredentials: true,
+         })
+         .then((response) => {
+           console.log(
+             JSON.stringify(response.data),
+             "--response data fom getAllTasks endpoint"
+           );
+           setArrayOfTasks(response.data.tasks);
+         })
+         .catch((error) => {
+           console.log(
+             `${error} --- error happened while fetching all tasks \n`
+           );
+         });
+
+
+    } , [])
 
 
     const handleAddingTask =  (e) => {
@@ -67,8 +87,15 @@ export const ProfilePage = () => {
           )
           .then((response) => {
             if (response.status === 200) {
-              console.log(`${response.data.message} --- from add-task`);
+              console.log(`${JSON.stringify(response.data)} --- from add-task`);
             }
+            axios.get("http://localhost:6028/task/getAllTasks" , {withCredentials: true}).then((response) => {
+                console.log(JSON.stringify(response.data) , "--response data fom getAllTasks endpoint")
+                 setArrayOfTasks(response.data.tasks);
+            }).catch((error) => {
+              console.log(`${error} --- error happened while fetching all tasks \n`)
+            });
+           
           })
           .catch((error) => {
             console.log(
@@ -155,7 +182,7 @@ export const ProfilePage = () => {
   return (
     <div
       id="Profile-Page-Main"
-      className="w-screen h-screen flex flex-col justify-evenly items-center bg-bg1 "
+      className="w-screen h-screen flex flex-col justify-evenly items-center bg-bg1 overflow-auto"
     >
       <ProfileCard></ProfileCard>
       <div
@@ -166,6 +193,26 @@ export const ProfilePage = () => {
         <button onClick={(e) => handleAddingTask(e)} disabled={addTask}>
           <AddIcon></AddIcon>
         </button>
+      </div>
+      <div id="All-Tasks-Div" className="flex flex-col justify-evenly items-center w-full h-1/4">
+        {Array.isArray(arrayOfTasks) && arrayOfTasks.map((e,index)=> {
+          return (
+            <div
+              id="Task"
+              className="flex flex-row justify-evenly items-center bg-emerald-500 text-white tracking-wide font-bold rounded-md shadow-md w-80 h-16"
+            >
+              <p>{e.taskname}</p>
+              {Array.isArray(e.times) &&
+                e.times.map((e) => {
+                  return <p>{e}</p>;
+                })}
+              {Array.isArray(e.days) &&
+                e.days.map((e) => {
+                  return <p>{e}</p>;
+                })}
+            </div>
+          );
+        })}
       </div>
       {addTask && (
         <div
