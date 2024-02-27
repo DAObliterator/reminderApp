@@ -154,7 +154,7 @@ Task.watch().on("change", async (data) => {
                 service: "gmail",
                 auth: {
                   user: "saradhsavyasaj@gmail.com",
-                  pass: process.env.PASSWORD,
+                  pass: "eiow jzjm qfuq cpha",
                 },
               });
               const mailOptions = {
