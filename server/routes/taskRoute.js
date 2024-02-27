@@ -60,7 +60,7 @@ router.post("/update-task" , (req,res) => {
 
 router.get("/getAllTasks" , async (req , res) => {
 
-  console.log(`req hit /getAllTasks endpoint \n`)
+  console.log(` ${req.session} req hit /getAllTasks endpoint \n`)
 
    if (checkAuthentication(req.session)) {
     console.log("authenticated  /getAllTasks");

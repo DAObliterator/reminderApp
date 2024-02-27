@@ -19,7 +19,7 @@ export const LogOutButton = () => {
     window.localStorage.removeItem("email");
 
     axios
-      .get("http://localhost:6028/auth/kill-auth" , {withCredentials: true})
+      .post("http://localhost:6028/auth/kill-auth" , {}, {withCredentials: true})
       .then((response) => {
         if (response.status == 200) {
           console.log("you have been successfull logged out ");

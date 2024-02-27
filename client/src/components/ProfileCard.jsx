@@ -10,7 +10,7 @@ export const ProfileCard = ( ) => {
       id="Profile-Card"
       className="min-h-40 min-w-40 flex flex-col justify-evenly items-center rounded-md bg-bg3 shadow-md  text-white font-bold tracking-wide "
     >
-      <div id="Profile-Dummy-Image" className="h-1/2 w-1/2 p-2">
+      <div id="Profile-Dummy-Image" className="max-h-40 max-w-40 p-2">
         <img src="/oldman2.jpg" alt="oldman" className="bg-bg3 rounded-full" />
       </div>
       <div

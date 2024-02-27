@@ -133,14 +133,14 @@ router.get("/dummy-route" , (req,res) => {
 
   
     checkAuthentication(req.session)
-      ? console.log("authenticated")
-      : console.log("unauthenticated");
+      ? console.log("authenticated in /dummy-route")
+      : console.log("unauthenticated in /dummy-route");
 
 
 })
 
 
-router.get("/kill-auth" , (req,res) => {
+router.post("/kill-auth" , (req,res) => {
 
   console.log(`req recieved to kill-auth endpoint ${JSON.stringify(req.session)} --this is what session looks like here`)
 
@@ -149,6 +149,7 @@ router.get("/kill-auth" , (req,res) => {
     req.session.isAuthenticated == false
     req.session.user = "";
     req.session.role = "";
+    req.session.destroy()
 
   }
 })

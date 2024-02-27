@@ -48,7 +48,7 @@ function App() {
   
 
   return (
-    <div id="Main" className=" bg-bg4 relative">
+    <div id="Main" className=" bg-bg4 w-screen h-screen relative overflow-auto">
       <UserContext.Provider value={{ userInfo, setUserInfo }}>
         <Router>
           <Navbar></Navbar>

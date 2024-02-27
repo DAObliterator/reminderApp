@@ -26,7 +26,7 @@ export const ProfilePage = () => {
     useEffect(() => {
 
        axios
-         .get("http://localhost:6028/task/getAllTasks", {
+         .get("http://localhost:6028/task/getAllTasks",  {
            withCredentials: true,
          })
          .then((response) => {
@@ -41,6 +41,12 @@ export const ProfilePage = () => {
              `${error} --- error happened while fetching all tasks \n`
            );
          });
+
+        axios.get("http://localhost:6028/auth/dummy-route" , { withCredentials: true}).then((response) => {
+          console.log(response.data , "111")
+        }).catch((error) => {
+          console.log(error , "0000")
+        })
 
 
     } , [])
@@ -158,8 +164,6 @@ export const ProfilePage = () => {
 
       e.preventDefault();
 
-      
-
     }
 
     const hours = []
@@ -194,12 +198,12 @@ export const ProfilePage = () => {
           <AddIcon></AddIcon>
         </button>
       </div>
-      <div id="All-Tasks-Div" className="flex flex-col justify-evenly items-center w-full h-1/4">
+      <div id="All-Tasks-Div" className="flex flex-col justify-evenly items-center w-full h-1/4 overflow-auto m-4">
         {Array.isArray(arrayOfTasks) && arrayOfTasks.map((e,index)=> {
           return (
             <div
               id="Task"
-              className="flex flex-row justify-evenly items-center bg-emerald-500 text-white tracking-wide font-bold rounded-md shadow-md w-80 h-16"
+              className="flex flex-row justify-evenly items-center bg-emerald-500 text-white tracking-wide font-bold rounded-md shadow-md min-w-80 min-h-20 m-4"
             >
               <p>{e.taskname}</p>
               {Array.isArray(e.times) &&
