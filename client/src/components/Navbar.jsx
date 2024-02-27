@@ -18,7 +18,7 @@ export const Navbar = () => {
   return (
     <div
       id="navbar"
-      className="w-full h-1/6 absolute flex flex-row justify-evenly items-center bg-bg2  text-xl font-extrabold "
+      className="w-full h-16 absolute flex flex-row justify-evenly items-center bg-bg2  text-xl font-extrabold sm:text-lg"
     >
       <Link to="/" className="text-white">
         HOME

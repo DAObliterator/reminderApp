@@ -34,6 +34,10 @@ export const AuthenticationPage = () => {
            window.localStorage.setItem("username", response.data.user.username);
            window.localStorage.setItem("role", response.data.user.role);
            window.localStorage.setItem("isAuthenticated", response.data.user.isAuthenticated);
+           window.localStorage.setItem(
+             "email",
+             response.data.user.email
+           );
            navigate("/profile");
          }
        })
@@ -63,7 +67,7 @@ export const AuthenticationPage = () => {
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
-          type="text"
+          type="password"
           id="password"
           placeholder="...password"
           className="p-2 sm:p-4 rounded-md "

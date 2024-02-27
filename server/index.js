@@ -4,6 +4,7 @@ import cors from "cors"
 import session from "express-session"
 import MongoStore from "connect-mongo";
 import { authRouter } from "./routes/authRouter.js";
+import { taskRouter } from "./routes/taskRoute.js";
 import dotenv from "dotenv"
 dotenv.config({ path: "./config.env"})
 
@@ -48,6 +49,7 @@ app.use(
   })
 );
 app.use("/auth", authRouter);
+app.use("/task" , taskRouter);
 
 //ROUTES
 app.get("/" , (req,res) => {

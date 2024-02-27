@@ -7,6 +7,7 @@ export const RegisterPage = () => {
 
   const [ username , setUsername ] = useState("");
   const [ password , setPassword ] = useState("");
+  const [email , setEmail ] = useState("");
   const [ role , setRole ] = useState("Patient");
   const userInfo = useContext(UserContext)
 
@@ -17,13 +18,13 @@ export const RegisterPage = () => {
 
     e.preventDefault()
 
-    console.log( username , password , role , " : (")
+    console.log( username , password , role ,email , " : (")
 
     axios
       .post(
         "http://localhost:6028/auth/register",
 
-        { username, password, role },
+        { username, password, role, email },
         { withCredentials: true }
       )
       .then((response) => {
@@ -52,7 +53,7 @@ export const RegisterPage = () => {
     >
       <form
         id="Register-Form"
-        className="sm:p-4 p-2 flex flex-col justify-evenly items-center rounded-md  bg-bg3 w-1/4 h-1/2 min-w-64 min-h-80"
+        className="sm:p-4 p-2 flex flex-col justify-evenly items-center rounded-md  bg-bg3 w-1/4 h-3/5 min-w-64 min-h-80"
         onSubmit={(e) => handleFormSubmit(e)}
       >
         <h2 className="text-2xl font-extrabold">REGISTER</h2>
@@ -69,6 +70,13 @@ export const RegisterPage = () => {
           placeholder="...password"
           className="p-2 sm:p-4 rounded-md "
           onChange={(e) => setPassword(e.target.value)}
+        />
+        <input
+          type="email"
+          id="email"
+          placeholder="...email"
+          className="p-2 sm:p-4 rounded-md "
+          onChange={(e) => setEmail(e.target.value)}
         />
         <div
           id="select-role"

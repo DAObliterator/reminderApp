@@ -1,12 +1,13 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import { User } from "../models/User.js";
+import { checkAuthentication } from "../middlewares/checkAuthentication.js";
 
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
   console.log("req recieved to register endpoint ", req.body);
-  const { username, password, role } = req.body;
+  const { username, password, role , email } = req.body;
 
   console.log(
     `${username} --- username ${password} --- password ${role} --- role \n`
@@ -38,6 +39,7 @@ router.post("/register", async (req, res) => {
               username: username.trim(),
               password: hash,
               role: role,
+              email: email
             }).then((result) => {
               console.log(result, "this is the result");
               res.status(200).json({
@@ -81,9 +83,11 @@ router.post("/login", async (req, res) => {
         } else {
           if (result) {
             console.log(`yeah passwords match --- \n`);
-            res.status(200).json({ message: "user logged in", user: { username: userExists.username , role: userExists.role , isAuthenticated: true } });
-            isAuthenticated = true
-            console.log(JSON.stringify(req.session) , "---session right after login" )
+            req.session.isAuthenticated = true
+            req.session.user = userExists.username,
+            req.session.role = userExists.role,
+            res.status(200).json({ message: "user logged in", user: { username: userExists.username , role: userExists.role , isAuthenticated: true , email: userExists.email } });
+           
           } else {
             console.log(`passwords do not match --- \n`);
             res.status(401).json({ message: "incorrect password" });
@@ -91,11 +95,9 @@ router.post("/login", async (req, res) => {
         }
       }
     );
-    if ( isAuthenticated) {
-             req.session.isAuthenticated = true;
-    }
    
   } else {
+    
     res.status(401).json({ message: "user does not exist" });
   }
 });
@@ -116,6 +118,39 @@ router.post("/auth-status" , async (req,res) => {
 
     }
 
+    checkAuthentication(req.session) ? console.log("authenticated") : console.log("unauthenticated");
+
+});
+
+
+router.get("/dummy-route" , (req,res) => {
+
+  console.log(
+    `req recieved to dummy-route endpoint ${JSON.stringify(
+      req.session
+    )} --this is what session looks like here`
+  );
+
+  
+    checkAuthentication(req.session)
+      ? console.log("authenticated")
+      : console.log("unauthenticated");
+
+
+})
+
+
+router.get("/kill-auth" , (req,res) => {
+
+  console.log(`req recieved to kill-auth endpoint ${JSON.stringify(req.session)} --this is what session looks like here`)
+
+  if (req.session.isAuthenticated) {
+
+    req.session.isAuthenticated == false
+    req.session.user = "";
+    req.session.role = "";
+
+  }
 })
 
 export { router as authRouter };

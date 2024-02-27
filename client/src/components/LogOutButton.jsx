@@ -2,6 +2,7 @@ import React , { useContext} from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
+import axios from "axios";
 
 export const LogOutButton = () => {
   const navigate = useNavigate();
@@ -15,6 +16,22 @@ export const LogOutButton = () => {
     window.localStorage.removeItem("username");
     window.localStorage.removeItem("role");
     window.localStorage.removeItem("isAuthenticated");
+    window.localStorage.removeItem("email");
+
+    axios
+      .get("http://localhost:6028/auth/kill-auth" , {withCredentials: true})
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("you have been successfull logged out ");
+          alert("User Logged Out");
+          navigate("/")
+        }
+      })
+      .catch((error) => {
+        console.log(
+          `${error} --- error happened while attempting to log out \n`
+        );
+      });
 
     
   };
