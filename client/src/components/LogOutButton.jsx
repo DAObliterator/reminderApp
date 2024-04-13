@@ -12,19 +12,24 @@ export const LogOutButton = () => {
   const handleLogout = (e) => {
     e.preventDefault();
 
-    setUserInfo({ isAuthenticated: false})
-    window.localStorage.removeItem("username");
-    window.localStorage.removeItem("role");
-    window.localStorage.removeItem("isAuthenticated");
-    window.localStorage.removeItem("email");
+    
 
     axios
-      .post("http://localhost:6028/auth/kill-auth" , {}, {withCredentials: true})
+      .post(
+        `${import.meta.env.VITE_API}/auth/kill-auth`,
+        {},
+        { withCredentials: true }
+      )
       .then((response) => {
         if (response.status == 200) {
           console.log("you have been successfull logged out ");
+          setUserInfo({ isAuthenticated: false });
+          window.localStorage.removeItem("username");
+          window.localStorage.removeItem("role");
+          window.localStorage.removeItem("isAuthenticated");
+          window.localStorage.removeItem("email");
           alert("User Logged Out");
-          navigate("/")
+          navigate("/");
         }
       })
       .catch((error) => {

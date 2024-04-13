@@ -29,7 +29,7 @@ function App() {
      useEffect(() => {
        axios
          .post(
-           "http://localhost:6028/auth/auth-status",
+           `${import.meta.env.VITE_API}/auth/auth-status`,
 
            {
              username: window.localStorage.getItem("username"),
@@ -40,7 +40,7 @@ function App() {
          .then((response) => {
            if (response.status === 200) {
              console.log(JSON.stringify(response.data), " ---response data \n");
-             setUserInfo(response.data)
+             setUserInfo(response.data);
            }
          })
          .catch(() => {});

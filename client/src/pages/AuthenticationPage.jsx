@@ -17,7 +17,7 @@ export const AuthenticationPage = () => {
 
      axios
        .post(
-         "http://localhost:6028/auth/login",
+         `${import.meta.env.VITE_API}/auth/login`,
 
          { username, password },
          { withCredentials: true }

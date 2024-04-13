@@ -151,6 +151,8 @@ router.post("/kill-auth" , (req,res) => {
     req.session.role = "";
     req.session.destroy()
 
+    res.status(200).json({ message: "Logged Out"});
+
   }
 })
 

@@ -26,7 +26,7 @@ export const ProfilePage = () => {
     useEffect(() => {
 
        axios
-         .get("http://localhost:6028/task/getAllTasks",  {
+         .get(`${import.meta.env.VITE_API}/task/getAllTasks`, {
            withCredentials: true,
          })
          .then((response) => {
@@ -42,11 +42,16 @@ export const ProfilePage = () => {
            );
          });
 
-        axios.get("http://localhost:6028/auth/dummy-route" , { withCredentials: true}).then((response) => {
-          console.log(response.data , "111")
-        }).catch((error) => {
-          console.log(error , "0000")
-        })
+        axios
+          .get(`${import.meta.env.VITE_API}/auth/dummy-route`, {
+            withCredentials: true,
+          })
+          .then((response) => {
+            console.log(response.data, "111");
+          })
+          .catch((error) => {
+            console.log(error, "0000");
+          });
 
 
     } , [])
@@ -87,7 +92,7 @@ export const ProfilePage = () => {
         
         axios
           .post(
-            "http://localhost:6028/task/add-task",
+            `${import.meta.env.VITE_API}/task/add-task`,
             { taskname: medicine, Times: arrayOfTimes, Days: arrayOfDays },
             { withCredentials: true }
           )
@@ -95,13 +100,22 @@ export const ProfilePage = () => {
             if (response.status === 200) {
               console.log(`${JSON.stringify(response.data)} --- from add-task`);
             }
-            axios.get("http://localhost:6028/task/getAllTasks" , {withCredentials: true}).then((response) => {
-                console.log(JSON.stringify(response.data) , "--response data fom getAllTasks endpoint")
-                 setArrayOfTasks(response.data.tasks);
-            }).catch((error) => {
-              console.log(`${error} --- error happened while fetching all tasks \n`)
-            });
-           
+            axios
+              .get(`${import.meta.env.VITE_API}/task/getAllTasks`, {
+                withCredentials: true,
+              })
+              .then((response) => {
+                console.log(
+                  JSON.stringify(response.data),
+                  "--response data fom getAllTasks endpoint"
+                );
+                setArrayOfTasks(response.data.tasks);
+              })
+              .catch((error) => {
+                console.log(
+                  `${error} --- error happened while fetching all tasks \n`
+                );
+              });
           })
           .catch((error) => {
             console.log(
@@ -186,7 +200,7 @@ export const ProfilePage = () => {
   return (
     <div
       id="Profile-Page-Main"
-      className="w-screen h-screen flex flex-col justify-evenly items-center bg-bg1 overflow-auto"
+      className="w-screen min-h-screen flex flex-col justify-evenly items-center bg-bg1"
     >
       <ProfileCard></ProfileCard>
       <div

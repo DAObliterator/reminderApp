@@ -22,20 +22,20 @@ export const RegisterPage = () => {
 
     axios
       .post(
-        "http://localhost:6028/auth/register",
+        `${import.meta.env.VITE_API}/auth/register`,
 
         { username, password, role, email },
         { withCredentials: true }
       )
       .then((response) => {
         console.log(
-          `${
-            JSON.stringify(response.data.newUser)
-          } ---data from /auth/register endpoint \n`
+          `${JSON.stringify(
+            response.data.newUser
+          )} ---data from /auth/register endpoint \n`
         );
 
-        if (response.status === 200 ) {
-          navigate("/authenticate")
+        if (response.status === 200) {
+          navigate("/authenticate");
         }
       })
       .catch((error) => {

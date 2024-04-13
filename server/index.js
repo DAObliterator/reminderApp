@@ -33,7 +33,7 @@ mongoose
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true,
     "Access-Control-Allow-Credentials": true,
   })
@@ -51,7 +51,7 @@ app.use(
     }),
     cookie: {
       path: "/",
-      secure: false, // Adjust based on environment
+      secure: process.env.ENVIRONMENT === "development" ? false : true, // Adjust based on environment
     },
   })
 );

@@ -12,7 +12,7 @@ export const Navbar = () => {
 
   useEffect(() => {
       setIsAuthenticated(userInfo.isAuthenticated);
-  } )
+  })
 
 
   return (

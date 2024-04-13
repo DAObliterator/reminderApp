@@ -4,7 +4,9 @@ import axios  from 'axios';
 export const SchedulePage = () => {
 
   useEffect(() => {
-    axios.get("http://localhost:6028/auth/dummy-route" , {withCredentials: true} )
+    axios.get(`${import.meta.env.VITE_API}/auth/dummy-route`, {
+      withCredentials: true,
+    });
   })
 
 
