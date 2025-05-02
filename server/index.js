@@ -43,6 +43,7 @@ app.use(
     secret: process.env.SECRET,
     resave: false, // Ensure this is set to false
     saveUninitialized: true, // Ensure this is set to true
+    proxy:process.env.ENVIRONMENT === "production" && true,
     store: MongoStore.create({
       mongoUrl: DB,
       collection: "sessions",
@@ -52,7 +53,7 @@ app.use(
     cookie: {
       path: "/",
       secure: process.env.ENVIRONMENT === "development" ? false : true, // Adjust based on environment
-      httpOnly: false
+      
     },
   })
 );
