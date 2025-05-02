@@ -52,6 +52,7 @@ app.use(
     cookie: {
       path: "/",
       secure: process.env.ENVIRONMENT === "development" ? false : true, // Adjust based on environment
+      httpOnly: false
     },
   })
 );
