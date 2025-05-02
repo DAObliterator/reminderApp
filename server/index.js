@@ -46,8 +46,8 @@ if (!(process.env.NODE_ENV === "development")) {
 app.use(
   session({
     secret: process.env.SECRET,
-    resave: false, // Ensure this is set to false
-    saveUninitialized: true, // Ensure this is set to true
+    resave: false,
+    saveUninitialized: false,
     proxy: process.env.ENVIRONMENT === "production" && true,
     store: MongoStore.create({
       mongoUrl: DB,
@@ -58,8 +58,10 @@ app.use(
       },
     }),
     cookie: {
+      secure: "auto",
       path: "/",
-      secure: process.env.ENVIRONMENT === "development" ? false : true, // Adjust based on environment
+      secure: process.env.ENVIRONMENT === "development" ? false : true,
+      sameSite: process.env.NODE_ENV === "development" ? false : "none", // Adjust based on environment
     },
   })
 );
