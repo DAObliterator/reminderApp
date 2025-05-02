@@ -38,6 +38,11 @@ app.use(
     "Access-Control-Allow-Credentials": true,
   })
 );
+
+if (!(process.env.NODE_ENV === "development")) {
+  app.set("trust proxy", 1); // you need to add this
+}
+
 app.use(
   session({
     secret: process.env.SECRET,
